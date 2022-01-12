@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <math.h>
-#include <assert.h>
+#include "napiernaf.h"
 
 
 void iton(int x, int **a, int *n){
@@ -48,9 +47,9 @@ void iton(int x, int **a, int *n){
     }
 }
 
-int ntoi(int *a, int n) {
+int ntoi(int *a, int n){
     int wsk = n - 1;
-    double suma = 0;
+    int suma = 0;
     if(n == 0){
         return 0;
     }
@@ -60,9 +59,9 @@ int ntoi(int *a, int n) {
         if(a[wsk] == 31){
             for(int i = wsk-1; i >= 0; i--){
                 if(a[i] >= 0){
-                    suma = suma + pow(2, a[i]);
+                    suma = suma + (1 << a[i]);
                 }else{
-                    suma = suma - pow(2, -1*(a[i]+1));
+                    suma = suma - (1 << -1*(a[i]+1));
                 }
             }
             if(suma >= 0){
@@ -73,9 +72,9 @@ int ntoi(int *a, int n) {
         }else if(a[wsk] == -32){
             for(int i = wsk-1; i >= 0; i--){
                 if(a[i] >= 0){
-                    suma = suma + pow(2, a[i]);
+                    suma = suma + (1 << a[i]);
                 }else{
-                    suma = suma - pow(2, -1*(a[i]+1));
+                    suma = suma - (1 << -1*(a[i]+1));
                 }
             }
             if(suma >= 0){
@@ -86,9 +85,9 @@ int ntoi(int *a, int n) {
         }else{
             for(int i = wsk; i >= 0; i--){
                 if(a[i] >= 0){
-                    suma = suma + pow(2, a[i]);
+                    suma = suma + (1 << a[i]);
                 }else{
-                    suma = suma - pow(2, -1*(a[i]+1));
+                    suma = suma - (1 << -1*(a[i]+1));
                 }
             }
         }
@@ -457,10 +456,3 @@ void nexp(int *a, int an, int *b, int bn, int **c, int *cn){
     *c = wynik;
     *cn = w;
 }
-
-
-int main(void) {
-    return 0;
-}
-
-
