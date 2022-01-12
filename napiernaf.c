@@ -4,12 +4,6 @@
 #include <math.h>
 #include <assert.h>
 
-void pisz(int *a, int n) {
-    for (int i = 0; i < n; ++i) {
-        printf("%+d", a[i]);
-    }
-    putchar(';');
-}
 
 void iton(int x, int **a, int *n){
     if(x == INT_MAX){
@@ -57,6 +51,9 @@ void iton(int x, int **a, int *n){
 int ntoi(int *a, int n) {
     int wsk = n - 1;
     double suma = 0;
+    if(n == 0){
+        return 0;
+    }
     if(a[wsk] > 31 || a[wsk] < -32){
         return 0;
     }else{
@@ -372,60 +369,64 @@ void copya2b(int *a, int an, int **b, int *bn){
 }
 
 void nmul(int *a, int an, int *b, int bn, int **c, int *cn){
-    int *copya = malloc((size_t) sizeof(int));
-    int x;
-    int *copyb = malloc((size_t) sizeof(int));
-    int y;
-    int *wynik = malloc((size_t) sizeof(int));;
-    int w = 0;
-    int *temp;
-    int t;
-    copya2b(a, an, &copya, &x);
-    copya2b(b, bn, &copyb, &y);
-    int znak;
-    if(a[an-1] < 0){
-        if(b[bn-1] < 0){
-            znak = 1;
-            for(int i = 0; i < bn; i++){
-                copyb[i] = (b[i] + 1) * -1;
-            }
-            for(int i = 0; i < an; i++){
-                copya[i] = (a[i] + 1) * -1;
-            }
-        }else{
-            znak = -1;
-            for(int i = 0; i < an; i++){
-                copya[i] = (a[i] + 1) * -1;
-            }
-        }
+    if(an == 0 || bn == 0){
+        *cn = 0;
     }else{
-        if(b[bn-1] < 0){
-            znak = -1;
-            for(int i = 0; i < bn; i++){
-                copyb[i] = (b[i] + 1) * -1;
+        int *copya = malloc((size_t) sizeof(int));
+        int x;
+        int *copyb = malloc((size_t) sizeof(int));
+        int y;
+        int *wynik = malloc((size_t) sizeof(int));;
+        int w = 0;
+        int *temp;
+        int t;
+        copya2b(a, an, &copya, &x);
+        copya2b(b, bn, &copyb, &y);
+        int znak;
+        if(a[an-1] < 0){
+            if(b[bn-1] < 0){
+                znak = 1;
+                for(int i = 0; i < bn; i++){
+                    copyb[i] = (b[i] + 1) * -1;
+                }
+                for(int i = 0; i < an; i++){
+                    copya[i] = (a[i] + 1) * -1;
+                }
+            }else{
+                znak = -1;
+                for(int i = 0; i < an; i++){
+                    copya[i] = (a[i] + 1) * -1;
+                }
             }
         }else{
-            znak = 1;
-        }
-    }
-    while(y != 0){
-        if(copyb[0] == 0 || copyb[0] == -1){
-            nadd(copya, x, wynik, w, &temp, &t);
-            copya2b(temp, t, &wynik, &w);                
-            free(temp);
-        }
-        pomnozprzezdwa(&copya, &x);
-        podzielprzezdwa(&copyb, &y);
-    }
-    free(copya);
-    free(copyb);
-    if(znak == -1){
-        for(int i = 0; i < w; i++){
-                wynik[i] = (wynik[i] + 1) * -1;
+            if(b[bn-1] < 0){
+                znak = -1;
+                for(int i = 0; i < bn; i++){
+                    copyb[i] = (b[i] + 1) * -1;
+                }
+            }else{
+                znak = 1;
             }
+        }
+        while(y != 0){
+            if(copyb[0] == 0 || copyb[0] == -1){
+                nadd(copya, x, wynik, w, &temp, &t);
+                copya2b(temp, t, &wynik, &w);                
+                free(temp);
+            }
+            pomnozprzezdwa(&copya, &x);
+            podzielprzezdwa(&copyb, &y);
+        }
+        free(copya);
+        free(copyb);
+        if(znak == -1){
+            for(int i = 0; i < w; i++){
+                    wynik[i] = (wynik[i] + 1) * -1;
+                }
+        }
+        *c = wynik;
+        *cn = w;
     }
-    *c = wynik;
-    *cn = w;
 }
 
 void nexp(int *a, int an, int *b, int bn, int **c, int *cn){
@@ -457,23 +458,9 @@ void nexp(int *a, int an, int *b, int bn, int **c, int *cn){
     *cn = w;
 }
 
-void ndivmod(int *a, int an, int *b, int bn, int **q, int *qn, int **r, int *rn);
 
-int rozne(int *a, int an, int *b, int bn){
-    if(an != bn){
-        return 1;
-    }else{
-        for(int i = 0; i < an; i++){
-            if(a[i] != b[i]){
-                return 1;
-            }
-        }
-    }
+int main(void) {
     return 0;
 }
 
-
-int main(void) {
-
-}
 
